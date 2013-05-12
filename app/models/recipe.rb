@@ -8,7 +8,7 @@ class Recipe < ActiveRecord::Base
 	def self.all_names_with_id
 		recipe_names = ""
 		self.all.each do |recipe|
-			recipe_names << "[#{recipe[:id]}] #{recipe[:name].capitalize}\n"
+			recipe_names << "[#{recipe[:id]}] #{recipe[:name].capitalize} cookies\n"
 		end
 		recipe_names
 	end

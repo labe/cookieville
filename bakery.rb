@@ -2,15 +2,17 @@ require_relative 'config/application'
 
 Player.new.run!
 
-# p Recipe.last.id
-
+# p Cookie.convert_id(8,1)
 
 # # p Baker.new.put_cookies_in_oven(9,1)
 
 # # p Oven.where(1).first.is_empty?
 
-
-
+# p Baker.new.set_oven_temp(1,300)
+# p Baker.new.set_oven_temp(2,300)
+# p Baker.new.put_cookies_in_oven(1,1)
+# p Baker.new.put_cookies_in_oven(2,2)
+# Oven.bake!(4)
 
 
 

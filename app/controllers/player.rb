@@ -1,5 +1,5 @@
 class Player < ActiveRecord::Base
-	attr_accessor :viewer, :player, :baker, :ovens
+	attr_accessor :viewer, :player, :baker, :ovens, :bakery
 
 	validates :username, :uniqueness => { :case_sensitive => false }
 	validates :username, :format => { :with => /\A\w{2,}\z/, :message => "Usernames may only be one word long and must be at least 2 characters long."}
@@ -56,8 +56,8 @@ class Player < ActiveRecord::Base
 			new_player_setup(player_id)
 		else				
 			@bakery = Bakery.where(:player_id => player_id).first
-			@baker = Baker.where(:bakery_id => @bakery[:id]).first
-			@ovens = Oven.where(:bakery_id => @bakery[:id])
+			@baker = Baker.where(:bakery_id => bakery[:id]).first
+			@ovens = Oven.where(:bakery_id => bakery[:id])
 		end
 	end
 
@@ -73,14 +73,14 @@ class Player < ActiveRecord::Base
 	end
 
 	def baker_setup
-		viewer.ask_baker_name(@bakery[:name])
-		@baker = Baker.create!(:name => gets.chomp, :bakery_id => @bakery[:id])
+		viewer.ask_baker_name(bakery[:name])
+		@baker = Baker.create!(:name => gets.chomp, :bakery_id => bakery[:id])
 	end
 
 	def oven_setup
 		@ovens = []
-		ovens << Oven.create!(:bakery_id => @bakery[:id], :model_id => 1)
-		ovens << Oven.create!(:bakery_id => @bakery[:id], :model_id => 2)
+		ovens << Oven.create!(:bakery_id => bakery[:id], :model_id => 1)
+		ovens << Oven.create!(:bakery_id => bakery[:id], :model_id => 2)
 		viewer.print_oven_info
 		press_any_key_to_continue
 	end
@@ -90,21 +90,24 @@ class Player < ActiveRecord::Base
 		viewer.print_main_menu
 		command = gets.chomp.upcase
 		case command
-		when "1"
-			reset_view
-			viewer.print_all_recipe_names
-			viewer.print_view_recipe_options
-			print_recipes(gets.chomp)
-		when "2"
-			reset_view
-			viewer.print_all_recipe_names
-			viewer.print_make_recipe_options
-			make_cookies(gets.chomp) 
+		when "1" then view_recipe_options_menu
+		when "2" then make_recipe_options_menu
+		when "3" then check_cookie_status_menu
+		when "4" then set_oven_temp
+		when "5" then put_cookies_in_oven
+		when "6" then bake_cookies
 		when "Q" then return
 		else 
 			input_error
 			main_menu
 		end
+	end
+
+	def view_recipe_options_menu
+		reset_view
+		viewer.print_all_recipe_names
+		viewer.print_view_options("recipe")
+		print_recipes(gets.chomp)
 	end
 
 	def print_recipes(recipe_id)
@@ -121,6 +124,13 @@ class Player < ActiveRecord::Base
 		press_any_key_to_continue
 	end
 
+	def make_recipe_options_menu
+		reset_view
+		viewer.print_all_recipe_names
+		viewer.print_make_recipe_options
+		make_cookies(gets.chomp) 
+	end
+
 	def make_cookies(recipe_id)
 		if Recipe.where(:id => recipe_id).any?
 			baker.make_cookies(recipe_id)
@@ -134,6 +144,46 @@ class Player < ActiveRecord::Base
 		press_any_key_to_continue
 	end
 
+	def check_cookie_status_menu
+		reset_view
+		viewer.print_all_player_cookies(baker[:id])
+	  press_any_key_to_continue
+	end
+
+	def set_oven_temp
+		reset_view
+		viewer.print_oven_status(bakery[:id])
+		viewer.ask_for_oven_id
+		if gets.chomp == ""
+			input_error
+		else 
+			oven_id = Oven.convert_id(gets.chomp.to_i, bakery[:id])
+			viewer.ask_for_oven_temp
+			oven_temp = gets.chomp.to_i
+			viewer.print_set_oven_temp_results(baker, oven_id, oven_temp)
+		end
+		press_any_key_to_continue
+	end
+
+	def put_cookies_in_oven
+		reset_view
+		viewer.print_all_player_cookies(baker[:id])
+		viewer.ask_for_cookie_batch_id
+		batch_id = Cookie.convert_id(gets.chomp.to_i, baker[:id])
+		reset_view
+		viewer.print_oven_status(bakery[:id])
+		viewer.ask_for_oven_id
+		oven_id = Oven.convert_id(gets.chomp.to_i, bakery[:id])
+		viewer.print_cookies_in_oven_attempt_results(batch_id, oven_id, baker)
+		press_any_key_to_continue
+	end
+
+	def bake_cookies
+		viewer.ask_for_bake_time
+		bake_time = gets.chomp
+		bake_time == "" ? viewer.print_bake_attempt_results(baker, 1) : viewer.print_bake_attempt_results(baker, bake_time.to_i)
+		press_any_key_to_continue
+	end
 
 	def input_error
 		viewer.print_error
@@ -144,7 +194,7 @@ class Player < ActiveRecord::Base
 		sleep(0.8)
 		viewer.clear_screen!
 		viewer.move_to_home!
-		viewer.print_bakery_header(@bakery[:name])
+		viewer.print_bakery_header(bakery[:name])
 	end
 
 	def press_any_key_to_continue
@@ -153,49 +203,3 @@ class Player < ActiveRecord::Base
 		main_menu
 	end
 end
-
-# class Player
-# 	attr_reader :viewer
-# 	attr_accessor :baker
-
-# 	def initialize
-# 		@viewer = Viewer.new
-# 		@baker = nil
-# 	end
-
-# 	def run!
-# 		check_all_cookies
-# 		baker = establish_baker(1)						# prettier way of doing this?
-# 		p baker.put_cookies_in_oven(9,1)			# "oven is not ready!" -> need to set oven temp
-# 		Oven.bake!(12)												# currently does nothing
-# 		check_cookies_in_oven_status					# also does nothing because no cookies in any oven
-# 		print_stats(baker)
-# 		print_recipes
-# 	end
-
-# 	def establish_baker(baker_id)
-# 		Baker.where(:id => baker_id).first
-# 	end
-
-# 	def check_cookies_in_oven_status
-# 		Cookie.where(:is_in_oven => true).each do |cookie|
-# 			puts "Batch \##{cookie[:id]}. " + Recipe.where(:id => cookie[:recipe_id]).first[:name] + ": " + Status.where(:id => cookie[:status_id]).first[:name]
-# 		end
-# 	end
-
-# 	def print_recipes
-# 		Recipe.all.each { |recipe| print recipe.format }
-# 	end
-
-# 	def print_stats(baker)
-# 		print baker.get_stats
-# 	end
-
-# 	def check_all_cookies
-# 		Cookie.all.each do |cookie|
-# 			puts "Batch \##{cookie[:id]}. " + Recipe.where(:id => cookie[:recipe_id]).first[:name] + ": " + Status.where(:id => cookie[:status_id]).first[:name]
-# 		end
-# 	end
-
-# end
-

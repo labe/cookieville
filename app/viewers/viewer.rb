@@ -3,8 +3,8 @@ class Viewer
 WIDTH = 50
 LINE = "-" * WIDTH
 
-GREETING = %Q(
-Welcome to CookieVille!
+GREETING = 
+%Q(Welcome to CookieVille!
 
 If you've played before, please enter your username.
 
@@ -12,15 +12,17 @@ If you're new to CookieVille, just press [ENTER] to get started!
 > )
 
 MAIN_MENU =
-"[1] View all recipes" + "\n" +					# done
-"[2] Make cookie recipe" + "\n" +				# done
-"[3] Check cookie status" + "\n" +			
-"[4] Put cookies in oven" + "\n" +
-"[5] Remove cookies from oven" + "\n" +
-"[6] Set oven temp" + "\n" +
-"[7] Get bakery stats" + "\n" +
+"[1] View recipes" + "\n" +							# done
+"[2] Make cookies" + "\n" +							# needs check for invalid user selection inputs
+"[3] Check cookie status" + "\n" +			# done
+"[4] Set oven temp" + "\n" +						# done
+"[5] Put cookies in oven" + "\n" +			# done
+"[6] Bake cookies!" + "\n" +						# done
+"[7] Remove cookies from oven" + "\n" +
+"[8] Get bakery stats" + "\n" +					# bakery name, baker names and stats, oven names and stats
+"[9] Settings and stuff" + "\n" + 			# help (how to play), change names, add info
  "\n" +
-"[Q] Quit game"  + "\n"
+"[Q] Quit game"  + "\n"									# TOTALLY WORKS
 
 PROMPT = %Q(
 What would you like to do?
@@ -73,11 +75,10 @@ What would you like to do?
 	end
 
 	def print_bakery_header(bakery_name)
-		puts LINE
-		puts LINE
+		2.times { puts LINE }
 		puts (bakery_name.center(WIDTH))
-		puts LINE
-		puts LINE + "\n\n"
+		2.times { puts LINE }
+		print "\n"
 	end
 
 	def print_main_menu
@@ -86,12 +87,12 @@ What would you like to do?
 	end
 
 	def print_all_recipe_names
-		print Recipe.all_names_with_id
+		print Recipe.all_names_with_id + "\n"
 	end
 
-	def print_view_recipe_options
-		print "Which recipe would you like to view?\n"
-		print "Enter the recipe number, or press [ENTER] to view all: "
+	def print_view_options(item)
+		print "Which #{item} would you like to view?\n"
+		print "Enter the #{item} number, or press [ENTER] to view all: "
 	end
 
 	def print_make_recipe_options
@@ -107,13 +108,52 @@ What would you like to do?
 		print "You have created a batch of #{recipe_name} cookies!\n"
 	end
 
+	def print_all_player_cookies(baker_id)
+		print Cookie.all_player_cookies_with_status_and_id(baker_id)
+	end
+
+	def print_oven_status(bakery_id)
+		print Oven.all_stats(bakery_id)
+	end
+
+	def ask_for_oven_id
+		print "Which oven would you like to choose?\n" +
+					"Please enter the oven number: "
+	end
+
+	def ask_for_oven_temp
+		print "\nTo what temperature would you like to set the oven?\n" +
+					"> "
+	end
+
+	def print_set_oven_temp_results(baker, oven_id, oven_temp)
+		print baker.set_oven_temp(oven_id, oven_temp)
+	end
+
+	def ask_for_cookie_batch_id
+		print "Which cookies would you like to bake?\n" +
+					"Please enter the cookie batch number: "
+	end
+
+	def print_cookies_in_oven_attempt_results(cookies_id, ovens_id, baker)
+		print baker.put_cookies_in_oven(cookies_id, ovens_id)
+	end
+
+	def ask_for_bake_time
+		print "Press [ENTER] to bake your cookies for 1 minute\n" +
+					"or enter a specific amount of minutes to bake: "
+	end
+
+	def print_bake_attempt_results(baker, time)
+		print Oven.bake!(baker, time)
+	end
+
 	def press_any_key
 		print "Press [ENTER] to return to the main menu"
 	end
 
 	def print_error
-		print "That is not a valid option. Try again?\n"
-		print "> "
+		print "That is not a valid option.\n"
 	end
 
 	def print_goodbye

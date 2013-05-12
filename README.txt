@@ -1,73 +1,49 @@
-### DONE ###
+---------------------------
+C O O K I E V I L L E ! ! !
+---------------------------
 
-1. baker can make cookies, cookie batch is added to cookies table and assigned that baker's id
-2. baker can put cookies in the oven
-3. baker can remove cookies from the oven
-4. oven class (read: kitchen) can bake cookies
-5. cookie batch status updates based on how long it has been in the oven
-6. an oven knows when it is full or not
-7. cookies cannot be put into a full oven
-8. cookies cannot be put into an oven if they are already in an oven
-9. cookies cannot be baked if they are not in an oven
-10. cookies cannot be removed from an oven if they are not in an oven
-11. cookies cannot be put into an oven unless that oven is set to the correct temperature for that recipe
-12. cookie status is determined by individual recipe's baking time
-13. oven temp can be set
-14. recipes can be printed out in a viewer-friendly format
-
-### NEW ###
-
-- player "sign-in/setup" flow created
-- can create player/baker-assigned batches of cookies
-- made join table of oven models and bakeries ("ovens")
-- menu header displaying custom bakery name
-
-through viewer, player can:
-
--view recipes/directions
--make cookie batches
+I. What what?!
+	A. This is a single-player-interactive virtual cookie bakery.
+		1. Where you, as the player, can make cookies.
+			a. Different kinds of cookies!
+			b. and "making" incorporates "baking"!
+				i. You can also burn your cookies if you aren't paying attention.
+					aa. or if you're just into burned cookies for some reason.
+				ii. conversely you can also deliberately underbake your cookies.
+				iii. or not bake them at all, if you're a raw cookie-dough fan
+					aa. (ugh)
+		2. Only one player can play at a time
+			a. i.e., no networking support. yet?
+		3. But the game supports multiple (lots of multiple!) players
+		4. AND IT SAVES EACH PLAYER'S DATA.
+			a. so if you made 10 batches of burned lemon cookies last time, they'll
+				 still be in your bakery the next time you come back to the game.
 
 
-
-### TO DO NEXT ###
-
-
-
-through viewer, player can:
-
-
--view all and individual cookie batches and status (cooked, in oven, etc)
--put cookies in oven
--bake cookies
--take cookies out of oven
--check bakery stats
--update player settings (bakery name, baker name, add player email, add player name?)
--read "help" file
+II. TELL ME MORE TELL ME MORE
+	A. Whoa greased lightning, you're burning up the quarter-mile 
+		1. (with your caps lock)
+		2. AND I LIKE IT
+	B. Okay but seriously
+	C. GETTING STARTED
+		1. in your REPL, navigate to the application root folder
+			a. by default, it should be named "cookieville"
+		2. from the command line, execute:
+			a. $ gem install activerecord
+		3. to run the program:
+			a. $ ruby cookieville.rb
 
 
-### LONG TERM ###
-
-- refactor for MVC >>>>> (CLEAN UP CODE VOMIT) <<<<<<
+III. This outline format is somewhat muddled, kid
+	A. Truth.
 
 
 
-- track time (every action = time spent, game/level = set time limit)
+DIRECTIONS:
 
-- ability to store dough in fridge/freezer (<- limited capacity, $$) ?
-- assign ingredients to cookie recipes
-- create kitchen pantry (database)
-- cannot make cookies unless pantry contains enough of each required ingredient
-- assign baker skill level based on # of successful cookie batches made?
-
-
-- bakery can have more than just a kitchen / kitchen owns the ovens (create kitchens table)
-- bakery can sell cookies to earn money to buy [ingredients to make more cookies, more ovens, etc.]
-- bakery can make more than just cookies (rename cookies table to 'foods' or something, keep schema)
-
-
-
-
-### ETC ###
-
-
-controller = players (create players table)
+1. Fork the cookieville repo
+2. Clone your forked copy to your local machine
+3. In your REPL, navigate to wherever you cloned the repo
+4. Inside the root directory (should be called "cookieville"), from the REPL, type:
+	$ gem install activerecord
+	$ ruby cookieville.rb 

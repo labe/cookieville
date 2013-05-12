@@ -14,8 +14,8 @@ Recipe.create!(:name => "teddy grahams", :bake_temp => 300, :bake_time => 25, :y
 
 # makes 2 basic oven models (fancier models in the works!)
 
-OvenModel.create!(:name => "bertha", :max_capacity => 2)
-OvenModel.create!(:name => "rosie", :max_capacity => 2)
+OvenModel.create!(:name => "Bertha", :max_capacity => 2)
+OvenModel.create!(:name => "Rosie", :max_capacity => 2)
 
 
 # makes 10 arbitrary batches of cookie dough and randomly assigns them a baker_id
