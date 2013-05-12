@@ -20,20 +20,23 @@
 - player "sign-in/setup" flow created
 - can create player/baker-assigned batches of cookies
 - made join table of oven models and bakeries ("ovens")
+- menu header displaying custom bakery name
 
 through viewer, player can:
 
 -view recipes/directions
 -make cookie batches
 
+
+
 ### TO DO NEXT ###
 
--menu header displaying bakery name?
+
 
 through viewer, player can:
 
 
--view all cookie batches and status (cooked, in oven, etc)
+-view all and individual cookie batches and status (cooked, in oven, etc)
 -put cookies in oven
 -bake cookies
 -take cookies out of oven
