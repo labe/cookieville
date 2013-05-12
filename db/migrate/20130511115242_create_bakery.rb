@@ -2,6 +2,7 @@ class CreateBakery < ActiveRecord::Migration
 	def change
 		create_table 	:bakeries do |t|
 			t.string		:name
+			t.integer		:player_id
 			t.timestamps
 		end
 
@@ -21,12 +22,16 @@ class CreateBakery < ActiveRecord::Migration
 			t.timestamps
 		end
 
-		create_table 	:ovens do |t|
+		create_table 	:oven_models do |t|
 			t.string		:name
-			t.integer		:temp, :default => 0
+			t.integer		:max_capacity
+			t.timestamps
+		end
+
+		create_table	:ovens do |t|
 			t.integer		:bakery_id
-			t.integer		:max_capacity, :default => 2
-			t.boolean		:is_empty, :default => true
+			t.integer		:model_id
+			t.integer		:temp, :default => 0
 			t.timestamps
 		end
 
@@ -40,6 +45,15 @@ class CreateBakery < ActiveRecord::Migration
 			t.integer		:bake_time
 			t.integer		:bake_temp
 			t.integer		:yield
+			t.timestamps
+		end
+
+		create_table	:players do |t|
+			t.string		:name
+			t.string		:username
+			t.string		:email
+			t.integer		:high_score
+			t.decimal		:bankroll
 			t.timestamps
 		end
 	end

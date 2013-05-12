@@ -7,8 +7,10 @@ require_relative '../app/models/cookie'
 require_relative '../app/models/oven'
 require_relative '../app/models/status'
 require_relative '../app/models/recipe'
+require_relative '../app/models/oven_model'
 require_relative '../app/controllers/player'
 require_relative '../app/viewers/viewer'
+
 
 APP_ROOT = Pathname.new(File.expand_path(File.join(File.dirname(__FILE__), '..')))
 

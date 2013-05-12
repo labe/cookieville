@@ -1,12 +1,12 @@
 class Baker < ActiveRecord::Base
 
-	def make_cookies(name_id)
-		Cookie.create!(:name_id => name_id, :baker_id => self.id)
+	def make_cookies(recipe_id)
+		Cookie.create!(:recipe_id => recipe_id, :baker_id => self.id)
 	end
 
 	def put_cookies_in_oven(batch_id, oven_id)
 		return "Those cookies are already in the oven" if Cookie.where(:id => batch_id).first.is_in_oven == true
-		return "That oven is full!" if Oven.where(:id => oven_id).first.is_empty? == false
+		return "That oven is full!" if Oven.where(:id => oven_id).first.is_full? == true
 		return "Oven is not ready!" if Oven.where(:id => oven_id).first[:temp] != Recipe.where(:id => Cookie.where(:id => batch_id).first[:recipe_id]).first[:bake_temp]
 		Cookie.update(batch_id, :is_in_oven => true, :oven_id => oven_id)
 	end
