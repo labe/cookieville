@@ -3,13 +3,12 @@ class Oven < ActiveRecord::Base
 	belongs_to	:oven_model
 
 	def self.bake!(baker, time = 1)
-		return "You don't have any cookies in the oven!\n" if Cookie.where(:baker_id => baker[:id], :is_in_oven => true).none?
 		Cookie.where(:baker_id => baker[:id], :is_in_oven => true).each do |cookie|
 			Cookie.update(cookie.id, :time_in_oven => cookie.time_in_oven + time)
 		end
 		Cookie.update_state
 		time == 1 ? time_string = "#{time} minute" : time_string = "#{time} minutes"
-		"You have baked your cookies for #{time_string}!\n"
+		"\nYou have baked your cookies for #{time_string}!\n"
 	end
 
 	def is_full?
@@ -42,8 +41,8 @@ class Oven < ActiveRecord::Base
 					oven_stats << "In this oven: #{batch_name}\n" +
 												"(inserted #{cookie[:time_in_oven]} minutes ago, cookies are #{batch_status})\n"
 				end
-			oven_stats << "\n"
 			end
+			oven_stats << "\n"
 			i += 1
 		end
 		oven_stats

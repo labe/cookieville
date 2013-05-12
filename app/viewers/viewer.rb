@@ -13,14 +13,14 @@ If you're new to CookieVille, just press [ENTER] to get started!
 
 MAIN_MENU =
 "[1] View recipes" + "\n" +							# done
-"[2] Make cookies" + "\n" +							# needs check for invalid user selection inputs
+"[2] Make cookies" + "\n" +							# done
 "[3] Check cookie status" + "\n" +			# done
 "[4] Set oven temp" + "\n" +						# done
 "[5] Put cookies in oven" + "\n" +			# done
 "[6] Bake cookies!" + "\n" +						# done
 "[7] Remove cookies from oven" + "\n" +	# done
-"[8] Get bakery stats" + "\n" +					# bakery name, baker names and stats, oven names and stats
-"[9] Settings and stuff" + "\n" + 			# help (how to play), change names, add info
+# "[8] Get bakery stats" + "\n" +					# bakery name, baker names and stats, oven names and stats
+# "[9] Settings and stuff" + "\n" + 			# help (how to play), change names, add info
  "\n" +
 "[Q] Quit game"  + "\n"									# TOTALLY WORKS
 
@@ -121,6 +121,10 @@ What would you like to do?
 					"Please enter the oven number: "
 	end
 
+	def print_cant_change_oven_temp
+		print "\nYou cannot change the temperature of this oven until it is empty!\n\n"
+	end
+
 	def ask_for_oven_temp
 		print "\nTo what temperature would you like to set the oven?\n" +
 					"> "
@@ -130,13 +134,21 @@ What would you like to do?
 		print baker.set_oven_temp(oven_id, oven_temp)
 	end
 
-	def ask_for_cookie_batch_id
-		print "Which cookies would you like to bake?\n" +
+	def ask_for_cookie_batch_id(command)
+		print "Which cookies would you like to #{command}?\n" +
 					"Please enter the cookie batch number: "
+	end
+
+	def print_cookies_already_in_oven
+		print "\nThose cookies are already in an oven!\n"
 	end
 
 	def print_cookies_in_oven_attempt_results(cookies_id, ovens_id, baker)
 		print baker.put_cookies_in_oven(cookies_id, ovens_id)
+	end
+
+	def print_no_cookies_to_bake
+		print	"\nYou don't have any cookies in the oven!\n"
 	end
 
 	def ask_for_bake_time
@@ -146,6 +158,10 @@ What would you like to do?
 
 	def print_bake_attempt_results(baker, time)
 		print Oven.bake!(baker, time)
+	end
+
+	def print_cookies_not_in_oven
+		print "\nThose cookies are not in an oven!\n"
 	end
 
 	def print_remove_cookies_attempt_results(batch_id, baker)

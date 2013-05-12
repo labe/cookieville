@@ -1,3 +1,59 @@
+### NEW IN THIS COMMIT ###
+
+- moved sign-in/setup code to player_sign_in_setup.rb
+- FIXED RECURSION CALLS FOR MENU ERROR INPUT (I think)
+- fixed bug that allowed mixed alphanum gibberish (e.g. "alj32jf") to return a recipe view
+
+much smoother error logic for 
+
+-cannot bake cookies if there are no batches in any ovens
+-cannot change an oven's temp if the oven contains cookies
+-cannot put a batch of cookies in any oven if the batch is already in an oven
+
+through viewer, player can:
+
+-remove cookies from the oven!
+-not remove cookies from the oven if the cookies are not already in an oven!
+
+
+
+### TO DO NEXT ###
+
+- when putting cookies in the oven, only show cookies not in an oven
+- when taking cookies out of the oven, only show cookies in an oven
+- cannot put cookies back into an oven once they've been taken out? (gross)
+
+through viewer, player can:
+
+-check bakery stats
+-update player settings (bakery name, baker name, add player email, add player name?)
+-read "help" file
+-view individual cookie batches and status (cooked, in oven, how long in oven)
+
+
+
+### LONG TERM ###
+
+- think more about private methods?
+- refactor for MVC >>>>> (CLEAN UP CODE VOMIT) <<<<<<
+- track time (every action = time spent, game/level = set time limit)
+- ability to store dough in fridge/freezer (<- limited capacity, $$) ?
+- assign ingredients to cookie recipes
+- create kitchen pantry (database)
+- cannot make cookies unless pantry contains enough of each required ingredient
+- assign baker skill level based on # of successful cookie batches made?
+- skill level-based recipes ("unlocking")
+
+- bakery can have more than just a kitchen / kitchen owns the ovens (create kitchens table)
+- bakery can sell cookies to earn money to buy [ingredients to make more cookies, more ovens, etc.]
+- bakery can make more than just cookies (rename cookies table to 'foods' or something, keep schema)
+
+- figure out how to allow for networked play?
+- figure out how to put the database on a network
+- probably look into security/password/etc. implementations because PEOPLE TAKE THEIR COOKIE DATA SERIOUSLY YO
+
+
+
 ### DONE ###
 
 1. baker can make cookies, cookie batch is added to cookies table and assigned that baker's id
@@ -35,52 +91,6 @@ through viewer, player can:
 -not put a batch of cookies in any oven if the batch is already in an oven
 -not bake cookies if there are no batches in any ovens
 -bake cookies
-
-
-### NEW IN THIS COMMIT ###
-
-through viewer, player can:
-
--remove cookies from the oven!
--not remove cookies from the oven if the cookies are not already in an oven!
-
-
-### TO DO NEXT ###
-
-- FIX RECURSION CALLS FOR ERROR INPUT (change to until/while loops?)
-- move setup code to new_player.rb ?
-- when putting cookies in the oven, only show cookies not in an oven
-- when taking cookies out of the oven, only show cookies in an oven
-
-through viewer, player can:
-
--check bakery stats
--update player settings (bakery name, baker name, add player email, add player name?)
--read "help" file
--view individual cookie batches and status (cooked, in oven, how long in oven)
-
-
-### LONG TERM ###
-
-- refactor for MVC >>>>> (CLEAN UP CODE VOMIT) <<<<<<
-- track time (every action = time spent, game/level = set time limit)
-- ability to store dough in fridge/freezer (<- limited capacity, $$) ?
-- assign ingredients to cookie recipes
-- create kitchen pantry (database)
-- cannot make cookies unless pantry contains enough of each required ingredient
-- assign baker skill level based on # of successful cookie batches made?
-- skill level-based recipes ("unlocking")
-
-- bakery can have more than just a kitchen / kitchen owns the ovens (create kitchens table)
-- bakery can sell cookies to earn money to buy [ingredients to make more cookies, more ovens, etc.]
-- bakery can make more than just cookies (rename cookies table to 'foods' or something, keep schema)
-
-- figure out how to allow for networked play?
-- figure out how to put the database on a network
-- probably look into security/password/etc. implementations because PEOPLE TAKE THEIR COOKIE DATA SERIOUSLY YO
-
-
-### ETC ###
 
 
 

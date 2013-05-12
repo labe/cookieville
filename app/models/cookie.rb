@@ -25,7 +25,7 @@ class Cookie < ActiveRecord::Base
 			end
 			status = Status.where(:id => cookie[:status_id]).first[:name]
 			name = Recipe.where(:id => cookie[:recipe_id]).first[:name]
-			all_player_cookies << "<#{cookie[:id]}> #{i}. #{name.capitalize}\n" + 
+			all_player_cookies << "#{i}. #{name.capitalize}\n" + 
 													  "Status: Currently #{oven_status}. Cookies are #{status}.\n" +
 													  "Time in oven: #{cookie[:time_in_oven]}\n\n"
 			i += 1

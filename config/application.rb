@@ -9,6 +9,7 @@ require_relative '../app/models/status'
 require_relative '../app/models/recipe'
 require_relative '../app/models/oven_model'
 require_relative '../app/controllers/player'
+require_relative '../app/controllers/player_sign_in_setup'
 require_relative '../app/viewers/viewer'
 
 
