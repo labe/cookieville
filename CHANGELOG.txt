@@ -19,22 +19,15 @@
 - can create player/baker-assigned batches of cookies
 - made join table of oven models and bakeries ("ovens")
 - menu header displaying custom bakery name
+- controller = players (create players table)
+- made a less improper README, moved this to CHANGELOG
+- (the README is, as of this very moment, not entirely true. in terms of what it says a player can do)
+- implemented "refresh screen" imitation thing for cleaner viewer output
 
 through viewer, player can:
 
 -view recipes/directions
 -make cookie batches
-
-
-### NEW IN THIS COMMIT ###
-
-controller = players (create players table) // actually did this two commits ago, oops.
-made a less improper README, moved this to CHANGELOG
-(the README is, as of this very moment, a lie. you can't do most of what the README says you can)
-implemented "refresh screen" imitation thing for cleaner viewer output
-
-through viewer, player can:
-
 -view all cookie batches and status (cooked, in oven)
 -see all oven statuses (current temp, what it contains)
 -change an oven's temp
@@ -43,6 +36,13 @@ through viewer, player can:
 -not bake cookies if there are no batches in any ovens
 -bake cookies
 
+
+### NEW IN THIS COMMIT ###
+
+through viewer, player can:
+
+-remove cookies from the oven!
+-not remove cookies from the oven if the cookies are not already in an oven!
 
 
 ### TO DO NEXT ###
@@ -54,7 +54,6 @@ through viewer, player can:
 
 through viewer, player can:
 
--take cookies out of oven
 -check bakery stats
 -update player settings (bakery name, baker name, add player email, add player name?)
 -read "help" file

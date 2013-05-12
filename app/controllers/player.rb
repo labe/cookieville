@@ -96,6 +96,7 @@ class Player < ActiveRecord::Base
 		when "4" then set_oven_temp
 		when "5" then put_cookies_in_oven
 		when "6" then bake_cookies
+		when "7" then remove_cookies_from_oven
 		when "Q" then return
 		else 
 			input_error
@@ -182,6 +183,15 @@ class Player < ActiveRecord::Base
 		viewer.ask_for_bake_time
 		bake_time = gets.chomp
 		bake_time == "" ? viewer.print_bake_attempt_results(baker, 1) : viewer.print_bake_attempt_results(baker, bake_time.to_i)
+		press_any_key_to_continue
+	end
+
+	def remove_cookies_from_oven
+		reset_view
+		viewer.print_all_player_cookies(baker[:id])
+		viewer.ask_for_cookie_batch_id
+		batch_id = Cookie.convert_id(gets.chomp.to_i, baker[:id])
+		viewer.print_remove_cookies_attempt_results(batch_id, baker)
 		press_any_key_to_continue
 	end
 

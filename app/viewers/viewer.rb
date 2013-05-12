@@ -18,7 +18,7 @@ MAIN_MENU =
 "[4] Set oven temp" + "\n" +						# done
 "[5] Put cookies in oven" + "\n" +			# done
 "[6] Bake cookies!" + "\n" +						# done
-"[7] Remove cookies from oven" + "\n" +
+"[7] Remove cookies from oven" + "\n" +	# done
 "[8] Get bakery stats" + "\n" +					# bakery name, baker names and stats, oven names and stats
 "[9] Settings and stuff" + "\n" + 			# help (how to play), change names, add info
  "\n" +
@@ -146,6 +146,10 @@ What would you like to do?
 
 	def print_bake_attempt_results(baker, time)
 		print Oven.bake!(baker, time)
+	end
+
+	def print_remove_cookies_attempt_results(batch_id, baker)
+		print baker.remove_cookies_from_oven(batch_id)
 	end
 
 	def press_any_key

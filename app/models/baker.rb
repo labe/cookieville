@@ -13,8 +13,10 @@ class Baker < ActiveRecord::Base
 	end
 
 	def remove_cookies_from_oven(batch_id)
-		return "Those cookies are not in the oven" if Cookie.where(:id => batch_id).first.is_in_oven != true
+		cookies = Cookie.where(:id => batch_id).first
+		return "Those cookies are not in the oven\n" if cookies.is_in_oven != true
 		Cookie.update(batch_id, :is_in_oven => false, :oven_id => nil)
+		"Your #{Recipe.where(:id => cookies[:recipe_id]).first[:name]} cookies have been taken out of the oven. They are #{Status.where(:id => cookies[:status_id]).first[:name]}!\n"
 	end
 
 	def set_oven_temp(oven_id, temp)
