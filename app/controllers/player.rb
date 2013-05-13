@@ -12,7 +12,7 @@ class Player < ActiveRecord::Base
 		player_setup(gets.chomp)		
 		main_menu
 	end
-									### MAKING CHANGES ###
+
 	def main_menu
 		reset_view
 		viewer.print_main_menu
@@ -53,7 +53,6 @@ class Player < ActiveRecord::Base
 			input_error
 			print_recipes(gets.chomp)
 		end
-		# press_any_key_to_continue
 	end
 
 	def make_recipe_options_menu
@@ -73,7 +72,6 @@ class Player < ActiveRecord::Base
 			input_error
 			make_cookies(gets.chomp.upcase)
 		end
-		# press_any_key_to_continue
 	end
 
 	def check_cookie_status_menu
@@ -102,7 +100,6 @@ class Player < ActiveRecord::Base
 		else
 			input_error
 		end
-		# press_any_key_to_continue
 	end
 
 	def put_cookies_in_oven

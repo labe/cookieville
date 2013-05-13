@@ -1,6 +1,5 @@
 ### NEW IN THIS COMMIT ###
 
-- cleaned up code calls to "return to main menu" // done in last commit, actually
 
 
 ### TO DO NEXT ###
@@ -76,6 +75,7 @@ through viewer, player can:
 - implemented error check for trying to bake or remove cookies from the oven if all ovens are empty
 - fixed database seed ("ready" status -> "perfect")
 - fixed README to include rake commands (necessary to make, etc. the database)
+- cleaned up code calls to "return to main menu" //
 
 much smoother error logic for 
 
