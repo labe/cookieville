@@ -30,6 +30,7 @@ II. TELL ME MORE TELL ME MORE
 			a. by default, it should be named "cookieville"
 		2. from the command line, execute:
 			a. $ gem install activerecord
+			b. $ rake db:drop && rake db:create && rake db:migrate && rake db:seed
 		3. to run the program:
 			a. $ ruby cookieville.rb
 

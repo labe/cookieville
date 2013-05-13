@@ -1,11 +1,6 @@
 ### NEW IN THIS COMMIT ###
 
-- implemented error check to prevent player from attempting certain actions if no cookie batches have been made
-- implemented error check for putting cookies in oven (choosing invalid batch, choosing invalid oven)
-- further improved newline viewer output stuff
-- implemented error check for trying to bake or remove cookies from the oven if all ovens are empty
-- fixed database seed ("ready" status -> "perfect")
-- fixed README to include rake commands (necessary to make, etc. the database)
+- cleaned up code calls to "return to main menu" // done in last commit, actually
 
 
 ### TO DO NEXT ###
@@ -71,11 +66,16 @@ through viewer, player can:
 - menu header displaying custom bakery name
 - controller = players (create players table)
 - made a less improper README, moved this to CHANGELOG
-- (the README is, as of this very moment, not entirely true. in terms of what it says a player can do)
 - implemented "refresh screen" imitation thing for cleaner viewer output
 - moved sign-in/setup code to player_sign_in_setup.rb
 - FIXED RECURSION CALLS FOR MENU ERROR INPUT (I think)
 - fixed bug that allowed mixed alphanum gibberish (e.g. "alj32jf") to return a recipe view
+- implemented error check to prevent player from attempting certain actions if no cookie batches have been made
+- implemented error check for putting cookies in oven (choosing invalid batch, choosing invalid oven)
+- further improved newline viewer output stuff
+- implemented error check for trying to bake or remove cookies from the oven if all ovens are empty
+- fixed database seed ("ready" status -> "perfect")
+- fixed README to include rake commands (necessary to make, etc. the database)
 
 much smoother error logic for 
 
