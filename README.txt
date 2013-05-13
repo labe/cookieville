@@ -46,4 +46,5 @@ DIRECTIONS:
 3. In your REPL, navigate to wherever you cloned the repo
 4. Inside the root directory (should be called "cookieville"), from the REPL, type:
 	$ gem install activerecord
+	$ rake db:drop && rake db:create && rake db:migrate && rake db:seed
 	$ ruby cookieville.rb 

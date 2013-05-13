@@ -12,7 +12,7 @@ class Player < ActiveRecord::Base
 		player_setup(gets.chomp)		
 		main_menu
 	end
-
+									### MAKING CHANGES ###
 	def main_menu
 		reset_view
 		viewer.print_main_menu
@@ -28,8 +28,8 @@ class Player < ActiveRecord::Base
 			when "7" then remove_cookies_from_oven
 			else 
 				input_error
-				main_menu
 			end
+			press_any_key_to_continue
 		end
 		viewer.print_goodbye
 		exit
@@ -53,7 +53,7 @@ class Player < ActiveRecord::Base
 			input_error
 			print_recipes(gets.chomp)
 		end
-		press_any_key_to_continue
+		# press_any_key_to_continue
 	end
 
 	def make_recipe_options_menu
@@ -73,10 +73,11 @@ class Player < ActiveRecord::Base
 			input_error
 			make_cookies(gets.chomp.upcase)
 		end
-		press_any_key_to_continue
+		# press_any_key_to_continue
 	end
 
 	def check_cookie_status_menu
+		return viewer.print_no_cookies_warning if Cookie.where(:baker_id => baker[:id]).none?
 		reset_view
 		viewer.print_all_player_cookies(baker[:id])
 	  press_any_key_to_continue
@@ -101,27 +102,38 @@ class Player < ActiveRecord::Base
 		else
 			input_error
 		end
-		press_any_key_to_continue
+		# press_any_key_to_continue
 	end
 
 	def put_cookies_in_oven
+		return viewer.print_no_cookies_warning if Cookie.where(:baker_id => baker[:id]).none?
 		reset_view
 		viewer.print_all_player_cookies(baker[:id])
 		viewer.ask_for_cookie_batch_id("bake")
-		batch_id = Cookie.convert_id(gets.chomp.to_i, baker[:id])
-		if Cookie.where(:id => batch_id).first[:is_in_oven] == true
-			viewer.print_cookies_already_in_oven
+		batch_id = gets.chomp.to_i
+		if Cookie.where(:baker_id => baker[:id]).count < batch_id || batch_id == 0
+			input_error
 		else
-			reset_view
-			viewer.print_oven_status(bakery[:id])
-			viewer.ask_for_oven_id
-			oven_id = Oven.convert_id(gets.chomp.to_i, bakery[:id])
-			viewer.print_cookies_in_oven_attempt_results(batch_id, oven_id, baker)
+			cookie_id = Cookie.convert_id(batch_id, baker[:id])
+			if Cookie.where(:id => cookie_id).first[:is_in_oven] == true
+				viewer.print_cookies_already_in_oven
+			else
+				reset_view
+				viewer.print_oven_status(bakery[:id])
+				viewer.ask_for_oven_id
+				model_id = gets.chomp.to_i
+				if OvenModel.where(:id => model_id).none?
+					input_error
+				else
+					oven_id = Oven.convert_id(model_id, bakery[:id])
+					viewer.print_cookies_in_oven_attempt_results(cookie_id, oven_id, baker)
+				end
+			end
 		end
-		press_any_key_to_continue
 	end
 
 	def bake_cookies
+		return viewer.print_no_cookies_warning if Cookie.where(:baker_id => baker[:id]).none?
 		if Cookie.where(:baker_id => baker[:id], :is_in_oven => true).none?
 			viewer.print_no_cookies_to_bake
 		else
@@ -129,10 +141,11 @@ class Player < ActiveRecord::Base
 			bake_time = gets.chomp
 			bake_time == "" ? viewer.print_bake_attempt_results(baker, 1) : viewer.print_bake_attempt_results(baker, bake_time.to_i)
 		end
-		press_any_key_to_continue
 	end
 
 	def remove_cookies_from_oven
+		return viewer.print_no_cookies_warning if Cookie.where(:baker_id => baker[:id]).none? == true
+		return viewer.print_no_cookies_in_oven if Cookie.where(:baker_id => baker[:id], :is_in_oven => true).none? == true
 		reset_view
 		viewer.print_all_player_cookies(baker[:id])
 		viewer.ask_for_cookie_batch_id("take out")
@@ -142,7 +155,6 @@ class Player < ActiveRecord::Base
 		else
 			viewer.print_remove_cookies_attempt_results(batch_id, baker)
 		end
-		press_any_key_to_continue
 	end
 
 	def input_error

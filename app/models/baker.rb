@@ -5,10 +5,10 @@ class Baker < ActiveRecord::Base
 	end
 
 	def put_cookies_in_oven(cookie_id, oven_id)
-		return "That oven is full!\n" if Oven.where(:id => oven_id).first.is_full? == true
-		return "That oven is not set to the right temperature for those cookies!\n" if Oven.where(:id => oven_id).first[:temp] != Recipe.where(:id => Cookie.where(:id => cookie_id).first[:recipe_id]).first[:bake_temp]
+		return "\nThat oven is full!\n" if Oven.where(:id => oven_id).first.is_full? == true
+		return "\nThat oven is not set to the right temperature for those cookies!\n" if Oven.where(:id => oven_id).first[:temp] != Recipe.where(:id => Cookie.where(:id => cookie_id).first[:recipe_id]).first[:bake_temp]
 		Cookie.update(cookie_id, :is_in_oven => true, :oven_id => oven_id)
-		"Hooray, your cookies are in the oven!\n"
+		"\nHooray, your cookies are in the oven!\n"
 	end
 
 	def remove_cookies_from_oven(batch_id)

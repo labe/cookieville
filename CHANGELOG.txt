@@ -1,26 +1,18 @@
 ### NEW IN THIS COMMIT ###
 
-- moved sign-in/setup code to player_sign_in_setup.rb
-- FIXED RECURSION CALLS FOR MENU ERROR INPUT (I think)
-- fixed bug that allowed mixed alphanum gibberish (e.g. "alj32jf") to return a recipe view
-
-much smoother error logic for 
-
--cannot bake cookies if there are no batches in any ovens
--cannot change an oven's temp if the oven contains cookies
--cannot put a batch of cookies in any oven if the batch is already in an oven
-
-through viewer, player can:
-
--remove cookies from the oven!
--not remove cookies from the oven if the cookies are not already in an oven!
-
+- implemented error check to prevent player from attempting certain actions if no cookie batches have been made
+- implemented error check for putting cookies in oven (choosing invalid batch, choosing invalid oven)
+- further improved newline viewer output stuff
+- implemented error check for trying to bake or remove cookies from the oven if all ovens are empty
+- fixed database seed ("ready" status -> "perfect")
+- fixed README to include rake commands (necessary to make, etc. the database)
 
 
 ### TO DO NEXT ###
 
-- when putting cookies in the oven, only show cookies not in an oven
-- when taking cookies out of the oven, only show cookies in an oven
+
+- when putting cookies in the oven, only show eligible cookies (never been in an oven)
+- when taking cookies out of the oven, only show eligible cookies (currently in an oven)
 - cannot put cookies back into an oven once they've been taken out? (gross)
 
 through viewer, player can:
@@ -29,13 +21,15 @@ through viewer, player can:
 -update player settings (bakery name, baker name, add player email, add player name?)
 -read "help" file
 -view individual cookie batches and status (cooked, in oven, how long in oven)
+-view cookie batches by group? (uncooked, in an oven, out of an oven, etc.?)
 
 
 
 ### LONG TERM ###
 
+- REFACTOR for MVC >>>>> (CLEAN UP CODE VOMIT AAAAAGGGGHHHHH!!!!!) <<<<<<
+
 - think more about private methods?
-- refactor for MVC >>>>> (CLEAN UP CODE VOMIT) <<<<<<
 - track time (every action = time spent, game/level = set time limit)
 - ability to store dough in fridge/freezer (<- limited capacity, $$) ?
 - assign ingredients to cookie recipes
@@ -79,6 +73,16 @@ through viewer, player can:
 - made a less improper README, moved this to CHANGELOG
 - (the README is, as of this very moment, not entirely true. in terms of what it says a player can do)
 - implemented "refresh screen" imitation thing for cleaner viewer output
+- moved sign-in/setup code to player_sign_in_setup.rb
+- FIXED RECURSION CALLS FOR MENU ERROR INPUT (I think)
+- fixed bug that allowed mixed alphanum gibberish (e.g. "alj32jf") to return a recipe view
+
+much smoother error logic for 
+
+-cannot bake cookies if there are no batches in any ovens
+-cannot change an oven's temp if the oven contains cookies
+-cannot put a batch of cookies in any oven if the batch is already in an oven
+
 
 through viewer, player can:
 
@@ -91,6 +95,7 @@ through viewer, player can:
 -not put a batch of cookies in any oven if the batch is already in an oven
 -not bake cookies if there are no batches in any ovens
 -bake cookies
-
+-remove cookies from the oven!
+-not remove cookies from the oven if the cookies are not already in an oven!
 
 

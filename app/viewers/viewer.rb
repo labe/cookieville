@@ -86,18 +86,22 @@ What would you like to do?
 		print PROMPT
 	end
 
+	def print_no_cookies_warning
+		print "You have not made any cookie batches yet!\n"
+	end
+
 	def print_all_recipe_names
 		print Recipe.all_names_with_id + "\n"
 	end
 
 	def print_view_options(item)
-		print "Which #{item} would you like to view?\n"
-		print "Enter the #{item} number, or press [ENTER] to view all: "
+		print "Which #{item} would you like to view?\n" +
+					"Enter the #{item} number, or press [ENTER] to view all: "
 	end
 
 	def print_make_recipe_options
-		print "Which recipe would you like to make?\n"
-		print "Enter the recipe number, or press [ENTER] to return to the main menu: "
+		print "Which recipe would you like to make?\n" +
+					"Enter the recipe number, or press [ENTER] to return to the main menu: "
 	end
 
 	def print_recipe(recipe)
@@ -105,7 +109,7 @@ What would you like to do?
 	end
 
 	def print_success_batch_made(recipe_name)
-		print "You have created a batch of #{recipe_name} cookies!\n"
+		print "\nYou have created a batch of #{recipe_name} cookies!\n"
 	end
 
 	def print_all_player_cookies(baker_id)
@@ -152,12 +156,16 @@ What would you like to do?
 	end
 
 	def ask_for_bake_time
-		print "Press [ENTER] to bake your cookies for 1 minute\n" +
+		print "\nPress [ENTER] to bake your cookies for 1 minute\n" +
 					"or enter a specific amount of minutes to bake: "
 	end
 
 	def print_bake_attempt_results(baker, time)
 		print Oven.bake!(baker, time)
+	end
+
+	def print_no_cookies_in_oven
+		print "\nYou do not have any cookies in the oven!\n"
 	end
 
 	def print_cookies_not_in_oven
